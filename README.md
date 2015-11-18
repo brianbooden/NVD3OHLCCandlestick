@@ -5,7 +5,7 @@ An open-high-low-close chart (also OHLC chart, or simply bar chart) is a type of
 A candlestick chart is a style of financial chart used to describe price movements of a security, derivative, or currency. Each "candlestick" typically shows one day; so for example a one-month chart may show the 20 trading days as 20 "candlesticks".
 It is like a combination of line-chart and a bar-chart: each bar represents all four important pieces of information for that day: the open, the close, the high and the low.
 
-This extension takes the core implementation of OHLC and Candlestick charts from NVD3 (http://nvd3.org/examples/stackedArea.html) and adapts it to be used in Qlik Sense.  Note that native Sense Selections are supported, but selections made from the NVD3 chart area currently do NOT send the selections back to Sense.
+This extension takes the core implementation of OHLC and Candlestick charts from NVD3 (https://nvd3-community.github.io/nvd3/examples/candlestickChart.html) and adapts it to be used in Qlik Sense.  Note that native Sense Selections are supported, but selections made from the NVD3 chart area currently do NOT send the selections back to Sense.
 
 The extension exposes the following properties:  
 
