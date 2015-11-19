@@ -24,8 +24,8 @@ function($) {
 				},
 				measures: {
 					uses: "measures",
-					min: 6,
-					max: 6
+					min: 4,
+					max: 4
 				},
 				sorting: {
 					uses: "sorting"
@@ -101,23 +101,11 @@ function drawStreamChart($element, layout) {
 var viz = function (self, data, labels, width, height, id, selections, layout, $element) {
 
 	// Get the properties
-	var chartType = layout.chartType
-	;
-		
-	// get key elements in Qlik Sense order
-	var listKey = [],
-		dateKey = [],
-		dateVal = 0;
-	$.each(data, function( index, row ) {
-		dateVal = convertToUnixTime(row[0].qNum);
-		if ($.inArray(dateVal, dateKey) === -1) {
-			dateKey.push(dateVal);
-		}
-	});
+	var chartType = layout.chartType;
 
 	// Map the hypercube data to required format, and convert Qlik date to Unix time
 	var dataNVD3 = data.map(function(row){
-					return {"date" : convertToUnixTime(row[0].qNum), "open" : row[1].qNum, "high" : row[2].qNum, "low" : row[3].qNum, "close" : row[4].qNum, "volume" : row[5].qNum, "adjusted" : row[6].qNum};
+					return {"date" : convertToUnixTime(row[0].qNum), "open" : row[1].qNum, "high" : row[2].qNum, "low" : row[3].qNum, "close" : row[4].qNum};
 				});
 
 				
@@ -181,38 +169,5 @@ function dateFromQlikNumber(n) {
 }
 
 function convertToUnixTime(_qNum) {
-	return dateFromQlikNumber(_qNum);
-}
-
-function findDate(_date, _arr, _offset) {
-	for (var i = _offset, len = _arr.length; i < len; i++) {
-		if (_arr[i][0] === _date) return i;
-	}
-	return -1;
-}
-
-function assignDefaultValues(dates, dataset, defaultValue) {
-	var newData = [],
-		sortDates = function(a,b){ return a > b ? 1 : -1; },
-		sortValues = function(a,b){ return a[0] > b[0] ? 1 : -1; },
-		i = -1;
-		
-	dates.sort(sortDates);
-	$.each(dataset, function(index1, setObject){
-		var newValues = [],
-			lastPos = 0,
-			i = -1;
-		setObject.values.sort(sortValues);
-		$.each(dates, function(index2, theDate){
-			i = findDate(theDate, setObject.values, lastPos)
-			if (i === -1) {
-				newValues.push([theDate,defaultValue]);
-			} else {
-				newValues.push([theDate,setObject.values[i][1]]);
-				lastPos = i;
-			}
-		});
-		newData.push( { key: setObject.key, seriesIndex: setObject.seriesIndex, values: newValues });
-	});
-	return newData;
+	return dateFromQlikNumber(_qNum).getTime();
 }
